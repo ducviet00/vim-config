@@ -115,23 +115,41 @@ require("packer").startup(function(use)
     run = ':GoUpdateBinaries'
   })
   use({
+    "onsails/lspkind-nvim",
+    event = "VimEnter"
+  })
+  use({
       "hrsh7th/nvim-cmp",
       branch = 'main',
       requires = {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
-        "hrsh7th/cmp-cmdline",
         "hrsh7th/nvim-cmp",
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
       }
   })
-  use("nvim-lualine/lualine.nvim")
   use({
-    "projekt0n/github-nvim-theme",
-    branch = 'main',
+    "quangnguyen30192/cmp-nvim-ultisnips",
+    after = {'nvim-cmp', 'ultisnips'}
   })
+  use({
+    "honza/vim-snippets",
+    after = 'ultisnips'
+  })
+  use({
+    "SirVer/ultisnips"
+    event = 'InsertEnter'
+  })
+  use({"mhinz/vim-signify", event = 'BufEnter'})
+  use("nvim-lualine/lualine.nvim")
+  use {
+    "sainnhe/gruvbox-material",
+    setup = function()
+      vim.g.gruvbox_material_palette = "mix"
+    end
+  }
   use("chrisbra/csv.vim")
   use("ellisonleao/glow.nvim")
   use({
