@@ -139,17 +139,12 @@ require("packer").startup(function(use)
     after = 'ultisnips'
   })
   use({
-    "SirVer/ultisnips"
+    "SirVer/ultisnips",
     event = 'InsertEnter'
   })
   use({"mhinz/vim-signify", event = 'BufEnter'})
   use("nvim-lualine/lualine.nvim")
-  use {
-    "sainnhe/gruvbox-material",
-    setup = function()
-      vim.g.gruvbox_material_palette = "mix"
-    end
-  }
+  use { "sainnhe/gruvbox-material" }
   use("chrisbra/csv.vim")
   use("ellisonleao/glow.nvim")
   use({

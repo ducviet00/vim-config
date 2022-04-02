@@ -84,15 +84,20 @@ _G.packer_plugins = {
     path = "/home/ducviet00/.local/share/nvim/site/pack/packer/start/cmp-buffer",
     url = "https://github.com/hrsh7th/cmp-buffer"
   },
-  ["cmp-cmdline"] = {
-    loaded = true,
-    path = "/home/ducviet00/.local/share/nvim/site/pack/packer/start/cmp-cmdline",
-    url = "https://github.com/hrsh7th/cmp-cmdline"
-  },
   ["cmp-nvim-lsp"] = {
     loaded = true,
     path = "/home/ducviet00/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
+  },
+  ["cmp-nvim-ultisnips"] = {
+    after_files = { "/home/ducviet00/.local/share/nvim/site/pack/packer/opt/cmp-nvim-ultisnips/after/plugin/cmp_nvim_ultisnips.lua" },
+    load_after = {
+      ultisnips = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/ducviet00/.local/share/nvim/site/pack/packer/opt/cmp-nvim-ultisnips",
+    url = "https://github.com/quangnguyen30192/cmp-nvim-ultisnips"
   },
   ["cmp-path"] = {
     loaded = true,
@@ -143,6 +148,13 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ducviet00/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
+  },
+  ["lspkind-nvim"] = {
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/home/ducviet00/.local/share/nvim/site/pack/packer/opt/lspkind-nvim",
+    url = "https://github.com/onsails/lspkind-nvim"
   },
   ["lualine.nvim"] = {
     loaded = true,
@@ -224,6 +236,15 @@ _G.packer_plugins = {
     path = "/home/ducviet00/.local/share/nvim/site/pack/packer/start/trouble.nvim",
     url = "https://github.com/folke/trouble.nvim"
   },
+  ultisnips = {
+    after = { "vim-snippets", "cmp-nvim-ultisnips" },
+    after_files = { "/home/ducviet00/.local/share/nvim/site/pack/packer/opt/ultisnips/after/plugin/UltiSnips_after.vim" },
+    loaded = false,
+    needs_bufread = true,
+    only_cond = false,
+    path = "/home/ducviet00/.local/share/nvim/site/pack/packer/opt/ultisnips",
+    url = "https://github.com/SirVer/ultisnips"
+  },
   ["vim-abolish"] = {
     loaded = true,
     path = "/home/ducviet00/.local/share/nvim/site/pack/packer/start/vim-abolish",
@@ -264,6 +285,22 @@ _G.packer_plugins = {
     path = "/home/ducviet00/.local/share/nvim/site/pack/packer/start/vim-highlightedyank",
     url = "https://github.com/machakann/vim-highlightedyank"
   },
+  ["vim-signify"] = {
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/home/ducviet00/.local/share/nvim/site/pack/packer/opt/vim-signify",
+    url = "https://github.com/mhinz/vim-signify"
+  },
+  ["vim-snippets"] = {
+    load_after = {
+      ultisnips = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/ducviet00/.local/share/nvim/site/pack/packer/opt/vim-snippets",
+    url = "https://github.com/honza/vim-snippets"
+  },
   ["vim-startify"] = {
     loaded = true,
     path = "/home/ducviet00/.local/share/nvim/site/pack/packer/start/vim-startify",
@@ -282,6 +319,19 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Load plugins in order defined by `after`
+time([[Sequenced loading]], true)
+vim.cmd [[ packadd nvim-cmp ]]
+time([[Sequenced loading]], false)
+vim.cmd [[augroup packer_load_aucmds]]
+vim.cmd [[au!]]
+  -- Event lazy-loads
+time([[Defining lazy-load event autocommands]], true)
+vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'ultisnips'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au VimEnter * ++once lua require("packer.load")({'lspkind-nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au BufEnter * ++once lua require("packer.load")({'vim-signify'}, { event = "BufEnter *" }, _G.packer_plugins)]]
+time([[Defining lazy-load event autocommands]], false)
+vim.cmd("augroup END")
 if should_profile then save_profiles() end
 
 end)
